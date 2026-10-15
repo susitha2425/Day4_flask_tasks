@@ -1,0 +1,154 @@
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(225, 239, 255, 0.42),
+            rgba(245, 232, 255, 0.38),
+            rgba(225, 250, 245, 0.42)
+        ),
+        url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1800&q=80");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.form-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 35px;
+
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 22px;
+
+    box-shadow: 0 15px 45px rgba(53, 69, 110, 0.15);
+}
+
+h2 {
+    font-weight: 700;
+    color: #283454;
+}
+
+.text-muted {
+    font-size: 14px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #39435c;
+}
+
+.form-control {
+    min-height: 46px;
+    border: 1px solid #dce2ee;
+    border-radius: 10px;
+    padding: 11px 13px;
+}
+
+.form-control:focus {
+    border-color: #7c83ed;
+    box-shadow: 0 0 0 0.2rem rgba(124, 131, 237, 0.15);
+}
+
+.btn {
+    min-height: 45px;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px 15px;
+}
+
+.btn:not(.btn-close) {
+    color: #fff;
+    background: #198754;
+    border-color: #198754;
+}
+
+.btn:not(.btn-close):hover,
+.btn:not(.btn-close):focus-visible {
+    color: #fff;
+    background: #146c43;
+    border-color: #146c43;
+}
+
+.btn:not(.btn-close):focus-visible {
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.success-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #d9f7e7;
+    color: #198754;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.profile-details {
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: #f7f8fc;
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 13px 0;
+    border-bottom: 1px solid #e5e8f0;
+    overflow-wrap: anywhere;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    color: #717b91;
+    font-size: 13px;
+}
+
+.detail-row strong {
+    color: #29344f;
+}
+
+@media (max-width: 576px) {
+    .form-card {
+        padding: 25px 20px;
+    }
+
+    .page-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    body {
+        background-attachment: scroll;
+    }
+}
