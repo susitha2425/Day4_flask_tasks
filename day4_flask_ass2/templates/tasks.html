@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My tasks · Task Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="tasks-page">
+    <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+        <div class="container">
+            <a class="navbar-brand brand-mark" href="{{ url_for('tasks') }}">
+                <span class="brand-icon"><i class="bi bi-check2-square"></i></span>
+                <span>Task Manager</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span class="welcome-user d-none d-sm-inline">Hi, {{ session.get('username', 'admin') }}</span>
+                <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="{{ url_for('logout') }}">
+                    <i class="bi bi-box-arrow-right me-1"></i> Log out
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <section class="task-panel mx-auto">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-end gap-3 mb-4">
+                <div>
+                    <p class="eyebrow mb-2">YOUR WORKSPACE</p>
+                    <h1 class="display-6 fw-bold mb-1">My tasks</h1>
+                    <p class="text-secondary mb-0">A little progress each day adds up.</p>
+                </div>
+                <span class="task-count"><i class="bi bi-list-check me-1"></i><span id="task-count">{{ tasks|length }}</span> tasks</span>
+            </div>
+
+            <form id="task-form" class="add-task-form mb-4" autocomplete="off">
+                <label class="visually-hidden" for="task-title">New task</label>
+                <input class="form-control form-control-lg" id="task-title" name="title"
+                       type="text" placeholder="What needs to get done?" maxlength="250" required>
+                <label class="visually-hidden" for="task-priority">Task priority</label>
+                <select class="form-select form-select-lg priority-select" id="task-priority" name="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <button class="btn btn-success btn-lg add-button" type="submit">
+                    <i class="bi bi-plus-lg me-1"></i><span>Add task</span>
+                </button>
+            </form>
+            <div id="task-message" class="alert d-none" role="alert"></div>
+
+            <div class="task-list" id="task-list" aria-live="polite">
+                {% for task in tasks %}
+                    <article class="task-item{% if task.status == 'Completed' %} is-completed{% endif %}"
+                             data-task-id="{{ task.id }}" data-title="{{ task.title }}"
+                             data-status="{{ task.status }}" data-priority="{{ task.priority }}">
+                        <button class="task-check-button{% if task.status == 'Completed' %} is-completed{% endif %}"
+                                type="button" aria-label="{{ 'Mark task as pending' if task.status == 'Completed' else 'Mark task as completed' }}"
+                                aria-pressed="{{ 'true' if task.status == 'Completed' else 'false' }}">
+                            <i class="bi {{ 'bi-check-circle-fill' if task.status == 'Completed' else 'bi-circle' }}"></i>
+                        </button>
+                        <span class="task-title">{{ task.title }}</span>
+                        <span class="badge rounded-pill status-badge{% if task.status == 'Completed' %} completed{% endif %}">{{ task.status }}</span>
+                        <span class="badge rounded-pill priority-badge priority-{{ task.priority|lower }}">{{ task.priority }}</span>
+                        <div class="task-actions">
+                            <button class="btn btn-light btn-sm edit-task-button" type="button" aria-label="Edit task" title="Edit task">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-light btn-sm delete-task-button" type="button" aria-label="Delete task" title="Delete task">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    </article>
+                {% else %}
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+                        <h2 class="h5 fw-semibold">Your list is clear</h2>
+                        <p class="text-secondary mb-0">Add your first task above and make today count.</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <p class="list-footer mb-0"><i class="bi bi-shield-check me-1"></i> Your tasks are saved locally.</p>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
